@@ -1,0 +1,32 @@
+// https://leetcode-cn.com/problems/super-pow/
+class Solution {
+    //快速幂
+    static int base=1337;
+    //将数组元素放入栈中
+    public int superPow(int a, int[] b) {
+        Stack<Integer> stack=new Stack<>();
+        int n=b.length;
+        for(int i=0;i<n;i++){
+            stack.push(b[i]);
+        }
+        return recursion(a,stack);
+    }
+    //缩小规模递归求解
+    public int recursion(int a,Stack<Integer> stack){
+        if(stack.isEmpty()) return 1;
+        int last=stack.pop();
+        int part1=myPower(a,last);
+        int part2=myPower(recursion(a,stack),10);
+        return part1*part2%base;
+    }
+    //a^k
+    public int myPower(int a,int k){
+        int res=1;
+        a%=base;
+        for(int i=0;i<k;i++){
+            res*=a;
+            res%=base;
+        }
+        return res;
+    }
+}
