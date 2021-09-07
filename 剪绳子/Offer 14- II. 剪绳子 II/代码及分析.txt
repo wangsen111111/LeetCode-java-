@@ -1,0 +1,14 @@
+//   https://leetcode-cn.com/problems/jian-sheng-zi-ii-lcof/
+var cuttingRope = function(n) {
+     //贪心算法
+    //最优：3.把绳子尽可能切为多个长度为 3的片段，留下的最后一段绳子的长度可能为0,1,2 三种情况。
+    if(n==2) return 1;
+    if(n==3) return 2;
+    let result=1;
+    while(n>4){
+        n-=3;
+        result=(result*3)%1000000007;
+    }
+    //最后只剩下2，3，4这几种情况
+    return result*n%1000000007;
+};

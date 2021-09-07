@@ -1,0 +1,14 @@
+//   https://leetcode-cn.com/problems/jian-sheng-zi-lcof/
+class Solution {
+    public int cuttingRope(int n) {
+        int[] memeory=new int[n+1];
+        memeory[1]=0;
+        memeory[2]=1;
+        for(int i=3;i<=n;i++){
+            for(int j=0;j<=i-1;j++){
+                memeory[i]=Math.max(memeory[i],Math.max(j*(i-j),j*memeory[i-j]));
+            }
+        }
+        return memeory[n];
+    }
+}
