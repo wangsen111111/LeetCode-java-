@@ -1,0 +1,42 @@
+//  https://leetcode-cn.com/problems/longest-univalue-path/
+/**
+ 递归求解：
+ 求二叉树的最长相同节点数的路径长度，对每个节点来说都可以将自己作为一个根节点作为一棵树
+ 它的最长路径数
+ (1)左子树的最长路径数
+ (2)右子树的最长路径数
+ (3)左右子树的最长路径数之和，前提：左右子树都和根节点相同，
+ */
+class Solution {
+    static int max;
+    public int longestUnivaluePath(TreeNode root) {
+        if(root==null){
+            return 0;
+        }
+        max=0;
+        longestPath(root);
+        return max;
+    }
+    //递归函数的功能其实就是从左子树和右子树中返回一个最大的同值路径
+    public static int longestPath(TreeNode root){
+        int leftLength=0;
+        int rightLength=0;
+        //(1)
+        if(root.left!=null&&root.val==root.left.val){
+            leftLength=1+longestPath(root.left);
+        }else if(root.left!=null){
+            longestPath(root.left);
+        }
+        //(2)
+        if(root.right!=null&&root.val==root.right.val){
+            rightLength=1+longestPath(root.right);
+        }else if(root.right!=null){
+            longestPath(root.right);
+        }
+        //(3)更新max
+        if((leftLength+rightLength)>max){
+            max=leftLength+rightLength;
+        }
+        return leftLength>rightLength?leftLength:rightLength;//每次返回最长的一条路
+    }
+}
