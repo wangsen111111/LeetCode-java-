@@ -1,0 +1,62 @@
+public class Main {
+    //DFS
+    public static void main(String[] args) {
+        int[] arr = new int[]{8,7,5,4,3,2};
+        System.out.println(maxNum(arr));
+    }
+    static int res;
+    static LinkedList<Integer> num1;
+    static LinkedList<Integer> num2;
+    public static int maxNum(int[] arr){
+        //两个数首位已确定
+        num1=new LinkedList<>();
+        num2=new LinkedList<>();
+        num1.addLast(arr[0]);
+        num2.addLast(arr[1]);
+        res=0;
+        dfs(arr,2);//从第二个索引开始dfs
+        return res;
+    }
+    private static void dfs(int[] arr, int index) {
+        //两个三位数得到,将两个三位数相乘，每次将最大值进行更新
+        if(index==arr.length){
+            int maxSum1=0;
+            int maxSum2=0;
+            //拿到maxSum1
+            for(int i:num1){
+                maxSum1*=10;
+                maxSum1+=i;
+            }
+            //拿到maxSum2
+            for(int i:num2){
+                maxSum2*=10;
+                maxSum2+=i;
+            }
+            res=Math.max(res,maxSum1*maxSum2);
+            return;
+        }
+        //DFS
+        if(num1.size()==num2.size()){
+            //如果两个数位数相同，则其都要进行dfs
+            //先对num1dfs
+            num1.addLast(arr[index]);
+            dfs(arr,index+1);
+            num1.removeLast();
+            //再对num2dfs
+            num2.addLast(arr[index]);
+            dfs(arr,index+1);
+            num2.removeLast();
+        }else {
+            if(num1.size()>num2.size()){
+                num2.addLast(arr[index]);
+                dfs(arr,index+1);
+                num2.removeLast();
+            }else{
+                num1.addLast(arr[index]);
+                dfs(arr,index+1);
+                num1.removeLast();
+            }
+        }
+    }
+}
+
