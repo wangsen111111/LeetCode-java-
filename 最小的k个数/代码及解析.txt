@@ -1,0 +1,58 @@
+//   https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof/
+class Solution {
+    public static int[] getLeastNumbers(int[] arr, int k) {
+        //1，利用快速排序先对数组进行排序
+        quickSort(arr,0,arr.length-1);
+        //2，对数组进行截取
+        int[] arr2 = Arrays.copyOf(arr,k);
+        return arr2;
+
+    }
+    //1，利用快速排序先对数组进行排序
+    public static int[] quickSort(int[] arr,int left,int right){
+        //1,通过一次排序要将数组分为独立的两部分，其中一部分数据要比一部分数据要小
+        //左下表和右下表
+        int l=left;
+        int r=right;
+        int pivot=arr[(right+left)/2];//中轴值
+        int temp=0;
+        while(l<r){
+            //在pivot的左边找，直到找到比其大的值才退出
+            while(arr[l]<pivot){
+                l+=1;
+            }
+            while(pivot<arr[r]){
+                r-=1;
+            }
+            //如果l>=r说明左边的数都比右边的数字小
+            if(l>=r){
+                break;
+            }
+            //交换两个数
+            temp=arr[r];
+            arr[r]=arr[l];
+            arr[l]=temp;
+            //可能数组中有与pivot相等的数，将其一直向pivot靠近即可
+            if(arr[r]==pivot){
+                l+=1;
+            }
+            if(arr[l]==pivot){
+                r-=1;
+            }
+        }
+        //如果l==r,必须将l与r向中轴靠近，否则会出现死递归，栈溢出
+        if(l==r){
+            l+=1;
+            r-=1;
+        }
+        //2,分别对左边部分和右边部分进行快速排序，递归
+        if(left<r){
+            quickSort(arr,left,r);
+        }
+        if(right>l){
+            quickSort(arr,l,right);
+        }
+        return arr;
+    }
+
+}
