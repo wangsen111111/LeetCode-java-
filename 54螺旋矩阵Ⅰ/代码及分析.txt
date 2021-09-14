@@ -1,0 +1,43 @@
+//   https://leetcode-cn.com/problems/spiral-matrix/  返回矩阵所有元素
+class Solution {
+    //暴力法：模拟整个向内环绕的填入过程
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> result = new ArrayList<Integer>();
+        if(matrix==null||matrix.length==0) return result;
+        int left=0;
+        int right=matrix[0].length-1;
+        int up=0;
+        int down=matrix.length-1;
+        //终止数字
+        int start=1;
+        int target=matrix.length* matrix[0].length;
+        //循环填入数字
+        while(start<=target){
+            //从左向右扫描，并加入到result中
+            for(int i=left;i<=right&&start<=target;i++){
+                result.add(matrix[up][i]);
+                start++;
+            }
+            up++;//收缩边界
+            //从上到下扫描
+            for(int i=up;i<=down&&start<=target;i++){
+                result.add(matrix[i][right]);
+                start++;
+            }
+            right--;//收缩边界
+            //从右到左扫描
+            for(int i=right;i>=left&&start<=target;i--){
+                result.add(matrix[down][i]);
+                start++;
+            }
+            down--;//边界收缩
+            //从下到上扫描
+            for(int i=down;i>=up&&start<=target;i--){
+                result.add(matrix[i][left]);
+                start++;
+            }
+            left++;//边界收缩
+        }
+        return result;
+    }
+}
