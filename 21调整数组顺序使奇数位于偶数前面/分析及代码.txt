@@ -1,0 +1,25 @@
+//  https://leetcode-cn.com/problems/diao-zheng-shu-zu-shun-xu-shi-qi-shu-wei-yu-ou-shu-qian-mian-lcof/
+class Solution {
+    //首尾双指针
+    public int[] exchange(int[] nums) {
+        int i = 0, temp=0;
+        int j = nums.length-1;
+        while(i < j){
+            while((nums[i]%2==1) && i<j){
+                //如果i一直是奇数，就一直让i++
+                i++;
+            }
+            while((nums[j]%2==0) && j>0){
+                //如果j一直是偶数，就一直让j--
+                j--;
+            }
+            //交换前后指针指向的奇数和偶数，让它们交换位置
+            if(i < j){
+                temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
+        return nums;
+    }
+}
