@@ -1,0 +1,38 @@
+//  https://leetcode-cn.com/problems/bao-han-minhan-shu-de-zhan-lcof/
+class MinStack {
+    private Stack<Integer> dataStack; // 数据栈
+    private Stack<Integer> minStack; // 辅助栈，记录每次有元素进栈后或者出栈后，元素的最小值
+
+    /** initialize your data structure here. */
+    public MinStack() {
+        //初始化辅助栈和数据栈
+        dataStack=new Stack<>();
+        minStack=new Stack<>();
+    }
+    
+    public void push(int x) {
+        if(minStack.isEmpty()||x<minStack.peek()){
+            //进辅助站1，辅助栈为空 2，minStack.peek() > x
+            minStack.push(x);
+        }else{
+            //如果minStack.peek()<x,就将上轮的最小值继续入辅助栈
+            minStack.push(minStack.peek());
+            }
+        //数据栈入栈
+        dataStack.push(x);
+    }
+    
+    public void pop() {
+        //辅助栈和数据栈都出栈
+        dataStack.pop();
+        minStack.pop();
+    }
+    
+    public int top() {
+        return dataStack.peek();
+    }
+    
+    public int min() {
+        return minStack.peek();
+    }
+}
