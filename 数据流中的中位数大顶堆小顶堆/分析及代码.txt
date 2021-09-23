@@ -1,0 +1,52 @@
+//   https://leetcode-cn.com/problems/shu-ju-liu-zhong-de-zhong-wei-shu-lcof/
+class MedianFinder {
+    /*
+    1,输入的时候将数字分为两半，小的一半放在大根堆small中，大的一半放在小根堆的big中。
+    2,输入的同时保证两堆的大小之差不超过一，如果超过，则将数量多的堆弹出堆顶元素放到另一个堆中。
+    3,取中位数的时候，奇数返回数量多的堆顶元素；偶数返回两堆的堆顶平均数即可。
+    */
+    /** initialize your data structure here. */
+    Queue<Integer> big, small;
+    int count;  //数字数量
+    public MedianFinder() {
+        big = new PriorityQueue<>(); // 小顶堆，保存较大的一半
+        small = new PriorityQueue<>((x, y) -> (y - x)); // 大顶堆，保存较小的一半
+        count=0;
+    }
+    
+    public void addNum(int num) {
+        //1,
+        if(small.isEmpty()){
+            small.add(num);
+            count++;
+            return;
+        }
+        if(num<=small.peek()){
+            small.add(num);
+            count++;
+        }else{
+            big.add(num);
+            count++;
+        }
+        //2,
+        if(small.size()-big.size()==2){
+            big.add(small.poll());
+        }
+        if(big.size()-small.size()==2){
+            small.add(big.poll());
+        }
+    }
+    
+    public double findMedian() {
+        //3,
+        if(count%2!=0){
+            if(small.size()>big.size()){
+                return small.peek();
+            }else{
+                return big.peek();
+            }     
+        }else{
+            return (small.peek() + big.peek()) * 0.5;
+        }
+    }
+}
