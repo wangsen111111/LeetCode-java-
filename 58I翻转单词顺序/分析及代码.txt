@@ -1,0 +1,19 @@
+//  https://leetcode-cn.com/problems/fan-zhuan-dan-ci-shun-xu-lcof/
+class Solution {
+    public String reverseWords(String s) {
+        //1,将字符串根据空格分为一个字符串数组
+        String[] ss=s.split(" ");
+        //2,逆向遍历字符串数组，并将其拼接为一个字符串
+        //构造器
+        StringBuilder sb=new StringBuilder();
+        for(int i=ss.length-1;i>=0;i--){
+            if(!ss[i].equals("")){
+            //将逆向遍历得到的单词拼接
+            sb.append(ss[i]);
+            sb.append(" ");
+            }
+        }
+        //3,去除字符串前后的空白符
+        return sb.toString().trim();
+    }
+}
