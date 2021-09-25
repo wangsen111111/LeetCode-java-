@@ -1,0 +1,39 @@
+//  https://leetcode-cn.com/problems/er-cha-sou-suo-shu-yu-shuang-xiang-lian-biao-lcof/
+//中序遍历递归
+class Solution {
+     //记录头结点
+    private Node head = null;
+    //记录遍历当前节点的前一个节点,用来把当前节点和前一个节点给串起来的
+    private Node pre = null;
+   
+    public Node treeToDoublyList(Node root) {
+        if(root==null) return root;
+        inorder(root);
+        //2，上面将链表各节点进行了双向连接，下面将链表的首尾连接起来
+        head.left=pre;
+        pre.right=head;
+        return head;
+    }
+    //二叉树的中序遍历
+    private void inorder(Node root) {
+        if(root==null) return;//边界条件的判断
+        //先遍历左子节点
+        inorder(root.left);
+
+        //1，将链表各节点进行双向连接
+        if (pre == null) {
+            //当前节点是头节点
+            head = root;
+        } else {
+            //串起来的结果就是前一个节点pre的right指向当前节点，
+            //然后当前节点的left指向前一个节点pre
+            pre.right = root;
+        }
+        root.left = pre;
+        //前一个节点和当前节点串起来之后，就让前一个节点指向当前节点，向后遍历
+        pre = root;
+
+        //最后在遍历右子节点
+        inorder(root.right);
+    }
+}
