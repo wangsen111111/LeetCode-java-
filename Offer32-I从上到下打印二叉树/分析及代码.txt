@@ -1,0 +1,28 @@
+//链接：https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof/
+class Solution {
+    /*
+    BFS 循环： 当队列 queue 为空时跳出；
+        1,出队： 队首元素出队，记为 node；
+        2,打印： 将 node.val 添加至res 尾部；
+        3,添加子节点： 若 node 的左（右）子节点不为空，则将左（右）子节点加入队列 queue ；
+    */
+    public int[] levelOrder(TreeNode root) {
+        if(root==null) return new int[0];
+        Queue<TreeNode> queue=new LinkedList<>(){
+            {add(root);} };
+        ArrayList<Integer> list=new ArrayList<>();
+        while(!queue.isEmpty()){
+            //1,
+            TreeNode node=queue.poll();
+            //2,
+            list.add(node.val);
+            //3,
+            if(node.left!=null) queue.add(node.left);
+            if(node.right!=null) queue.add(node.right);
+        }
+        int[] res=new int[list.size()];
+        for(int i=0;i<list.size();i++)
+            res[i]=list.get(i);
+        return res;
+    }
+}
