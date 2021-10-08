@@ -1,0 +1,57 @@
+//  https://leetcode-cn.com/problems/sort-an-array/
+class Solution {
+    /*
+    QuickSort(对冒泡排序的一种改进):
+        [分两半，左递归快排，右递归快排]
+        1,通过一趟排序将要排序的数据分割成独立的两部分，其中一部分数据都比另一部分的所有数据都要小，
+        2,然后再按此方法对这两部分数据分别进行快速排序
+        3,整个排序过程可以递归进行
+    */
+    public int[] sortArray(int[] nums) {
+        return quickSort(nums,0,nums.length-1);
+    }
+    public static int[] quickSort(int[] arr,int left,int right){
+        int r=right;                                                                    
+        int l=left;   
+        int pivot=arr[(left+right)/2];//中轴值 
+        int temp=0;
+        while(l<r){
+            //在中轴值的左边值比中轴值打的换到右边
+            while(arr[l]<pivot){
+                l+=1;
+            }
+            while(arr[r]>pivot){
+                r-=1;
+            }
+            //如果l大于等于r说明左边的都比右边的小就不用交换
+            if(l>=r){
+                break;
+            }
+            //否则将左右两个数进行交换
+            temp=arr[r];
+            arr[r]=arr[l];
+            arr[l]=temp;
+            //如果数组中有与中轴值相同的数就让他一直移动到中轴值旁边
+            if(arr[l]==pivot){
+                r--;
+            }
+            if(arr[r]==pivot){
+                l++;
+            }
+        }
+        //如果l==r，必须l++,r--否则会出现栈溢出，死递归
+        if(l==r){
+            l++;
+            r--;
+        }
+        //左递归
+        if(left<r){
+            quickSort(arr,left,r);
+        }
+        //右递归
+        if(right>l){
+            quickSort(arr,l,right);
+        }
+        return arr;
+    }
+}
