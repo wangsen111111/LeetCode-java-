@@ -1,0 +1,33 @@
+//  链接：https://leetcode-cn.com/problems/sort-characters-by-frequency/
+class Solution {
+    /*
+    1.使用哈希表记录每个字符出现的频率
+    2.再将列表中的字符按照频率降序排序。
+    3.遍历顺序为字符按照频率递减的顺序。对于每个字符，将该字符按照出现频率拼接到排序后的字符串
+    */
+    public String frequencySort(String s) {
+        //1
+        Map<Character,Integer> map=new HashMap<>();
+        int frequency=0;
+        for(int i=0;i<s.length();i++){
+            char c=s.charAt(i);
+            frequency=map.getOrDefault(c,0)+1;
+            map.put(c,frequency);
+        }
+        //2
+        List<Character> list=new ArrayList<>(map.keySet());
+        Collections.sort(list,(a,b)->
+            map.get(b)-map.get(a)
+        );
+        //3
+        StringBuilder sb=new StringBuilder();
+        for(int i=0;i<list.size();i++){
+            char c=list.get(i);
+            frequency=map.get(c);
+            for(int j=0;j<frequency;j++){
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+}
