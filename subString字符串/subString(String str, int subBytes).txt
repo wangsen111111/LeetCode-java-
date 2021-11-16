@@ -1,0 +1,25 @@
+//写一个函数，2 个参数，1 个字符串，1 个字节数，返回截取的字符串，要求字符串中的中文不能出现乱码
+//如（“我ABC”，4）应该截为“我AB”      输入（“我ABC 汉DEF”，6）     输出为“我ABC”
+public class Solution15 {
+    public static void main(String[] args) {
+        System.out.println(subString("王123", 3));
+    }
+    public static String subString(String str, int subBytes) {
+        int bytes = 0; // 用来存储字符串的总字节数
+        for (int i = 0; i < str.length(); i++) {
+            if (bytes == subBytes) {
+                return str.substring(0, i);
+            }
+            char c = str.charAt(i);
+            if (c < 256) {//判定是否为单字节字符
+                bytes += 1; // 英文字符的字节数看作1
+            } else {
+                bytes += 2; // 中文字符的字节数看作2
+                if(bytes - subBytes == 1){
+                    return str.substring(0, i);
+                }
+            }
+        }
+        return str;
+    }
+}
